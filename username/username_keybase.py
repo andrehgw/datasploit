@@ -24,7 +24,8 @@ def main(username):
     url = "https://keybase.io/_/api/1.0/user/lookup.json?usernames=%s" %username
     req = requests.get(url)
     data = json.loads(req.text) 
-    if data['them'][0] is not None:
+    # there doesn't exist data['them'] if status code is not 0
+    if 'them' in data and data['them'][0] is not None:
         dict_them = data['them'][0]
         return dict_them
     else:

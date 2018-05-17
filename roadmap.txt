@@ -6,3 +6,7 @@
 
 # Design pluggable APIs structure so the tool works as a framework. 
 # Option to configure Alerting and monitoring on all result set specific to an entity. Based on hash mismatch, send alerts. 
+
+# New Modules:
+- Tinder
+- Facebook
