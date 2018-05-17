@@ -86,7 +86,4 @@ profile_pic/
 reports/json/
 /.project
 /.pydevproject
-<<<<<<< HEAD
-=======
-/.gitignore
->>>>>>> branch 'master' of https://github.com/andrehgw/datasploit.git
+
