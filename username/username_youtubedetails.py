@@ -59,7 +59,11 @@ def get_channel_details(username, service, **kwargs):
             file_path = "profile_pic/%s" % username
             if not os.path.exists(file_path):
                 os.makedirs(file_path)
-            path = file_path + "/youtube." + url.split('.')[-1]
+            
+            # convert path parts in file name to underscore
+            savepath = url.split('.')[-1].replace('/', '_')
+            path = file_path + "/youtube." + savepath
+            
             urllib.urlretrieve(url, path)
         if 'customUrl' in result['snippet']:
             details["Full URL"] = str("https://www.youtube.com/channel/{id}"
