@@ -37,10 +37,6 @@ TESTRUN = 0
 PROFILE = 0
 
 
-fb_client_id="201223937146312"
-fb_client_secret="6b676d6c608f5a7d9766a0dffdff0ac6"
-fb_exchange_token="EAAC3AxlLPcgBAGeVABnwAuLps0oZCvjLDJZBWpQ3LIHWXcjcIRrCl9eYgd9vqnfmDsWs5yAXZAl6ZAAamE1tJSZBEMbOt5e31UCM5Ak4p3KMmuwKI3KXpKvZAOmFQfuJHzMdZA9oUdgTGuRXWXPJnoLxL66ZBsGLzlBZAJ1ORjuiLIvhxOtMXbud3"
-
 fb_api_url = "https://graph.facebook.com"
 
 
@@ -100,7 +96,7 @@ USAGE
         main routine - test Facebook Graph API
         '''
             
-        token_url = "%s/oauth/access_token?grant_type=fb_exchange_token&client_id=%s&client_secret=%s&fb_exchange_token=%s" % (fb_api_url,fb_client_id,fb_client_secret,fb_exchange_token)                
+        token_url = "%s/oauth/access_token?grant_type=facebook_exchange_token&client_id=%s&client_secret=%s&facebook_exchange_token=%s" % (fb_api_url,facebook_client_id,facebook_client_secret,facebook_exchange_token)                
         req = requests.get(token_url)
         data = json.loads(req.text)
         if 'access_token' in data:
