@@ -23,6 +23,8 @@ import os
 import requests
 import json
 
+import vault
+
 
 from argparse import ArgumentParser
 from argparse import RawDescriptionHelpFormatter
@@ -39,6 +41,16 @@ PROFILE = 0
 
 fb_api_url = "https://graph.facebook.com"
 
+
+#facebook_client_id=vault.get_key('facebook_client_id')
+#facebook_client_secret=vault.get_key('facebook_client_secret')
+#facebook_exchange_token=vault.get_key('facebook_exchange_token')
+
+'''
+get token from: https://developers.facebook.com/tools/accesstoken/
+'''
+
+facebook_access_token=vault.get_key('facebook_access_token')
 
 class CLIError(Exception):
     '''Generic exception to raise and log different fatal errors.'''
@@ -96,28 +108,36 @@ USAGE
         main routine - test Facebook Graph API
         '''
             
-        token_url = "%s/oauth/access_token?grant_type=facebook_exchange_token&client_id=%s&client_secret=%s&facebook_exchange_token=%s" % (fb_api_url,facebook_client_id,facebook_client_secret,facebook_exchange_token)                
-        req = requests.get(token_url)
+        #token_url = '%s/oauth/access_token?grant_type=facebook_exchange_token&client_id=%s&client_secret=%s&facebook_exchange_token=%s' % (fb_api_url,facebook_client_id,facebook_client_secret,facebook_exchange_token)                
+        #token_url = '%s/oauth/access_token?client_id=%s&client_secret=%s&fb_exchange_token=%s&grant_type=client_credentials' % (fb_api_url,facebook_client_id,facebook_client_secret,facebook_exchange_token)
+        
+        #req = requests.get(token_url)
+        #data = json.loads(req.text)
+        #if 'access_token' in data:
+        #    fb_access_token=data['access_token']
+        
+        print ("access token: %s\n" % facebook_access_token)
+        
+        
+        # test own profile metadata
+        graph_url = '%s/me?metadata=1&access_token=%s' % (fb_api_url,facebook_access_token) 
+        req = requests.get(graph_url)
         data = json.loads(req.text)
-        if 'access_token' in data:
-            fb_access_token=data['access_token']
-            print ("access token: %s\n" % fb_access_token)
-            
-            # test own profile metadata
-            graph_url = "%s/me?metadata=1&access_token=%s" % (fb_api_url,fb_access_token) 
-            req = requests.get(graph_url)
-            data = json.loads(req.text)
-            
-            # search for user
-            username = "maik.kunze"
-            graph_url = "%s/%s?access_token=%s" % (fb_api_url,username,fb_access_token)
-            req = requests.get(graph_url)
-            data = json.loads(req.text)
-            
-            
-            
+        
+        # search for user
+        username = "maik.kunze"
+        graph_url = '%s/%s?access_token=%s' % (fb_api_url,username,facebook_access_token)
+        req = requests.get(graph_url)
+        data = json.loads(req.text)
+        
+        if 'error' in data and len(data['error']) > 0:
+            errordict = data['error']
+            if 'message' in errordict and len(errordict['message']) > 0: 
+                errormessage = errordict['message']
+                if errormessage.find('query users by their username') != -1:
+                    print ("user alias '%s' exists on Facebook" % username)
         else:
-            raise(Exception("didn't get no token from Facebook ;-("))
+            print ("no user alias '%s' on Facebook" % username)
             
         
         return 0
