@@ -10,3 +10,7 @@
 # New Modules:
 - Tinder
 - Facebook
+- Yahoo
+
+#see:
+https://github.com/naqushab/SearchEngineScrapy
