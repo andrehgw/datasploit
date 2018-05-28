@@ -29,7 +29,22 @@ import requests
 import json
 
 import scrapy
-import vault
+
+import time
+
+#import vault
+
+#from selenium import webdriver
+#from selenium.webdriver.common.keys import Keys
+
+import datetime
+
+from selenium.webdriver.firefox.options import Options
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.common.exceptions import NoSuchElementException
+ 
 
 
 from argparse import ArgumentParser
@@ -44,6 +59,7 @@ from scrapy import signals, log
 from twisted.internet import reactor
 from scrapy.crawler import Crawler, CrawlerProcess
 from scrapy.settings import Settings
+from time import sleep
 
 
 __all__ = []
@@ -59,6 +75,33 @@ PROFILE = 0
 yahoo_url = "https://login.yahoo.com/"
 
    
+
+class wait_for_page_load(object):
+
+    def __init__(self, browser):
+        self.browser = browser
+
+    def __enter__(self):
+        self.old_page = self.browser.find_element_by_tag_name('html')
+
+    def page_has_loaded(self):
+        new_page = self.browser.find_element_by_tag_name('html')
+        return new_page.id != self.old_page.id
+
+    def __exit__(self, *_):
+        self.wait_for(self.page_has_loaded)   
+        
+    def wait_for(self,condition_function):
+        start_time = time.time()
+        while time.time() < start_time + 3:
+            if condition_function():
+                return True
+            else:
+                time.sleep(0.1)
+        raise Exception(
+            'Timeout waiting for {}'.format(condition_function.__name__)
+        )
+
 
 class CLIError(Exception):
     '''Generic exception to raise and log different fatal errors.'''
@@ -143,16 +186,61 @@ USAGE
         
         print json.loads(r.text)
         """
-        
+ 
+ 
+        """       
         process = CrawlerProcess({
             'USER_AGENT': 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)'
         })
         
         process.crawl(DmozSpider())
         process.start()
-            
+        """    
+        
+        """
+        opts = Options()
+        opts.set_headless()
+        assert opts.headless  # operating in headless mode
+        browser = Firefox(options=opts)
+        browser.get('https://duckduckgo.com')
+        """
         
         
+        
+        # The place we will direct our WebDriver to
+        url = "https://login.yahoo.com"
+        
+        testuser = "john@yahoo.com"
+        
+        print "testing for %s" % testuser
+        
+        # Creating the WebDriver object using the ChromeDriver
+        driver = webdriver.Firefox()
+        driver.set_page_load_timeout(30)
+        
+        wait = WebDriverWait(driver, 30)
+        
+        driver.get(url)
+        
+               
+        with wait_for_page_load(driver):
+            driver.find_element_by_id("login-username").send_keys(testuser)
+            driver.find_element_by_id("login-signin").click()
+            #print "Button is clicked at time: " + str(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
+            #wait.until(lambda driver: driver.execute_script('return document.readyState') == 'complete')
+            #print "Ajax request is completed at time: " + str(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
+        
+        #source = driver.page_source
+        
+        try:
+            errortest = driver.find_element_by_id("username-error")
+            if errortest != None:
+                print "user doesn't exist"
+        except NoSuchElementException:
+            print "user exist"
+        #print source
+        
+        driver.close()
         
         return 0
     
