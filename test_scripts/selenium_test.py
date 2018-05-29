@@ -20,6 +20,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.support.ui import WebDriverWait
  
 
 def wait_for(condition_function):
@@ -52,10 +53,10 @@ class wait_for_page_load(object):
         
 def main():
     url = "https://login.yahoo.com"
-    testuser = "maria@yahoo.de"
+    testuser = "john@yahoo.de"
     
     options = webdriver.FirefoxOptions()
-    options.set_headless(True)
+    options.set_headless(False)
     
     driver = webdriver.Firefox(options=options)
     
@@ -64,9 +65,11 @@ def main():
     driver.get(url)
     
     try:
+        #element = WebDriverWait(driver, 10).until(lambda driver: driver.execute_script('return document.readyState') == 'complete')
         with wait_for_page_load(driver):
             driver.find_element_by_id("login-username").send_keys(testuser)
             driver.find_element_by_id("login-signin").click()
+        
     except Exception, e:
         sys.stderr.write("Error: " + repr(e) + "\n") 
     
@@ -76,7 +79,6 @@ def main():
             print "%s doesn't exist" % testuser
     except NoSuchElementException:
         print "%s exists" %testuser
-    
     
     driver.close()
     
