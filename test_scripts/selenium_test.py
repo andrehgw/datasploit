@@ -53,10 +53,10 @@ class wait_for_page_load(object):
         
 def main():
     url = "https://login.yahoo.com"
-    testuser = "john@yahoo.de"
+    testuser = "maik.kunze@freenet.de"
     
     options = webdriver.FirefoxOptions()
-    options.set_headless(False)
+    options.set_headless(True)
     
     driver = webdriver.Firefox(options=options)
     
