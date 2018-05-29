@@ -53,6 +53,8 @@ import sys
 import requests
 import json
 
+from base import style
+
 from termcolor import colored
 
 # Control whether the module is enabled or not
@@ -62,10 +64,6 @@ ENABLED = True
 facebook_access_token=vault.get_key('facebook_access_token')
 
 fb_api_url = "https://graph.facebook.com"
-
-class style:
-    BOLD = '\033[1m'
-    END = '\033[0m'
 
 def banner():
     # Write a cool banner here
