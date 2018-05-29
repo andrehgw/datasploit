@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+# encoding: utf-8
+
 """
 Query Facebook graph search API for user. 
 
