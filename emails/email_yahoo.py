@@ -23,6 +23,7 @@ from termcolor import colored
 from base import style
 
 from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException
 
 # Control whether the module is enabled or not
 ENABLED = True
@@ -91,11 +92,43 @@ def main(email):
     testuser = email
     
     options = webdriver.FirefoxOptions()
-    options.set_headless(False)
+    
+    webdriver_headless = vault.get_key('webdriver_headless')
+    if webdriver_headless != None and webdriver_headless.lower() == "true":
+        options.set_headless(True)
     
     driver = webdriver.Firefox(options=options)
     driver.get(url)
     
+    # fill login form and press the "further"-button
+    try:
+        #element = WebDriverWait(driver, 10).until(lambda driver: driver.execute_script('return document.readyState') == 'complete')
+        with wait_for_page_load(driver):
+            driver.find_element_by_id("login-username").send_keys(testuser)
+            driver.find_element_by_id("login-signin").click()
+        
+    except Exception, e:
+        account_error.append("error: %s" % repr(e))
+    
+    """
+    If there doesn't exist an account with given email, Yahoo presents
+    a red error message on the page. This is represented by the following tag
+    after pressing the "further"-button:
+    
+    <p id="username-error" class="row error" role="alert" 
+       data-error="messages.ERROR_INVALID_USERNAME">
+       Diese E-Mail-Adresse ist uns leider nicht&nbsp;bekannt.
+    </p>
+    
+    So if we don't have this element in the DOM, we can suspect, an
+    account with given email exists.
+    """
+    try:
+        errortest = driver.find_element_by_id("username-error")
+        if errortest != None:
+            account_information.append("%s doesn't exist" % testuser)
+    except NoSuchElementException:
+        account_information.append("%s exists" %testuser) 
     
     
     
@@ -115,9 +148,15 @@ def output(data, email=""):
     :param data:  result with account information and error messages
     :param email:
     '''
-    # Use the data variable to print out to console as you like
-    for i in data:
-        print i
+    # output all errors
+    if 'account_error' in data and len(data['account_error']) > 0:
+        for cerror in data['account_error']:
+            print colored(style.BOLD + "[!] Error: " + cerror + style.END, 'red')
+            
+    # output all user information
+    if 'account_information' in data and len(data['account_information']) > 0:
+        for cinfo in data['account_information']:
+            print colored(style.BOLD + cinfo + style.END, 'green')
 
 
 if __name__ == "__main__":
