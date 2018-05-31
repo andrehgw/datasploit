@@ -3,16 +3,18 @@
 
 #Backup in ~/Desktop/config.py_backup
 
+# by default suppress browser window of selenium webdriver,
+# may be disabled for debugging. 
+webdriver_headless = True
+
+# API-keys
 shodan_api=""
 bing_api=""
 github_access_token=""
 builtwith_api=""
 censysio_id=""
 censysio_secret=""
-#facebook_access_token = ""
-facebook_client_id=""
-facebook_client_secret=""
-facebook_exchange_token=""
+facebook_access_token = ""
 flickr_api=""
 google_api=""
 google_cse_key=""
