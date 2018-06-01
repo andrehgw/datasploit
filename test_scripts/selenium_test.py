@@ -98,12 +98,12 @@ def main():
     Test for Lieferando
     """
     url = "https://www.lieferando.de"
-    testuser = "maik.kunze12@freenet.de"
+    testuser = "maik.kunze15@freenet.de"
     surname = "Maik Kunze"
     testpassword = "1stVerySecurePassword!"
     
     options = webdriver.FirefoxOptions()
-    options.set_headless(True)
+    options.set_headless(False)
     
     driver = webdriver.Firefox(options=options)
     
@@ -141,7 +141,10 @@ def main():
         # worst case but no other possibility because it comes only html back 
         # for div "userpanel-wrapper", so 3 seconds should be enough to get
         # a AJAX-response
+        
         time.sleep(3)
+        #driver.implicitly_wait(3)
+        
         
         """
         interpret the result: if there exists already an account, then exist
