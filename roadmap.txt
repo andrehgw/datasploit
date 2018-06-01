@@ -23,7 +23,6 @@ https://www.jappy.com/password
 https://www.bildkontakte.de/
 https://www.kwick.de/auth/credentials/
 https://verliebt-im-norden.de/account/lostpass/
-https://pizza.de/
 http://www.mv-spion.de/einloggen
 https://pizza.de/
 
@@ -45,7 +44,6 @@ https://www.romantik-50plus.de/account/lostpass/
 
 registration:
 -------------
-lieferando.de
 https://www.verlieb-dich.com/register.php
 https://www.chatcity.de/de/registration/index.html
 

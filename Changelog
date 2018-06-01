@@ -1,0 +1,9 @@
+2018-06-01:
+
+- module username_facebook
+- module email_yahoo
+- moved class "style" into base.by
+- added docs/README_selenium.md
+- added selenium and scrapy to requirements.txt
+- added param "webdriver_headless" to config
+- module email_lieferando
