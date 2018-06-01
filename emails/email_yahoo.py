@@ -86,6 +86,7 @@ def main(email):
     '''
     accountstats = {}
     account_information = []
+    account_not_exists_info = []
     account_error = []
     
     url = "https://login.yahoo.com"
@@ -126,15 +127,16 @@ def main(email):
     try:
         errortest = driver.find_element_by_id("username-error")
         if errortest != None:
-            account_information.append("%s doesn't exist" % testuser)
+            account_not_exists_info.append("No account %s on Yahoo" % testuser)
     except NoSuchElementException:
-        account_information.append("%s exists" %testuser) 
+        account_information.append("Yahoo account %s exists" %testuser) 
     
     
     
     driver.close()
     
     accountstats['account_information'] = account_information
+    accountstats['account_not_exists_info'] = account_not_exists_info
     accountstats['account_error'] = account_error
     
     return accountstats
@@ -152,7 +154,12 @@ def output(data, email=""):
     if 'account_error' in data and len(data['account_error']) > 0:
         for cerror in data['account_error']:
             print colored(style.BOLD + "[!] Error: " + cerror + style.END, 'red')
-            
+      
+    # output for not existing account
+    if 'account_not_exists_info' in data and len(data['account_not_exists_info']) > 0:
+        for cinfo in data['account_not_exists_info']:
+            print colored(style.BOLD + cinfo + style.END, 'yellow')
+     
     # output all user information
     if 'account_information' in data and len(data['account_information']) > 0:
         for cinfo in data['account_information']:
