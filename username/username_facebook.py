@@ -75,6 +75,7 @@ def main(username):
     userstats = {}
     
     user_information = []
+    user_not_exists_info = []
     user_error = []
     
     facebook_access_token = vault.get_key('facebook_access_token')
@@ -93,7 +94,7 @@ def main(username):
                     if errormessage.find('query users by their username') != -1:
                         user_information.append("user alias '%s' exists on Facebook" % username)
                     else: 
-                        user_error.append("'%s' not found on Facebook" % username)
+                        user_not_exists_info.append("'%s' not found on Facebook" % username)
                 else:
                     user_error.append("no tag 'message'")     
             else:
@@ -106,6 +107,7 @@ def main(username):
         user_error.append("no Facebook access token configured")
     
     userstats['user_information'] = user_information
+    userstats['user_not_exists_info'] = user_not_exists_info
     userstats['user_error'] = user_error
     
     return userstats
@@ -121,6 +123,11 @@ def output(data, username=""):
     if 'user_information' in data and len(data['user_information']) > 0:
         for cinfo in data['user_information']:
             print colored(style.BOLD + cinfo + style.END, 'green')
+            
+    # output information if account doesn't exist
+    if 'user_not_exists_info' in data and len(data['user_not_exists_info']) > 0:
+        for cinfo in data['user_not_exists_info']:
+            print colored(style.BOLD + cinfo + style.END, 'yellow')
             
     
 
