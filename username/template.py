@@ -5,6 +5,9 @@ import base
 import vault
 import sys
 
+from termcolor import colored
+from base import style
+
 # Control whether the module is enabled or not
 ENABLED = True
 
