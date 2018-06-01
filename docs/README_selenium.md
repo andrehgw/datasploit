@@ -21,12 +21,10 @@ pip install -r requirements.txt
 * Firefox, for example, requires geckodriver, which needs to be installed 
 * before the below examples can be run. Make sure it’s in your PATH, e. g., p
 * lace it in /usr/bin or /usr/local/bin.
-*
-* | DRIVER     | URL                                                                   |
-* |------------|-----------------------------------------------------------------------|
-* | Chrome:    | https://sites.google.com/a/chromium.org/chromedriver/downloads        |
-* | Edge:      | https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/ |
-* | Firfeox:   | https://github.com/mozilla/geckodriver/releases                       |
-* | Safari:    | https://webkit.org/blog/6900/webdriver-support-in-safari-10/          |
-*
-*
+
+| DRIVER     | URL                                                                   |
+|------------|-----------------------------------------------------------------------|
+| Chrome:    | https://sites.google.com/a/chromium.org/chromedriver/downloads        |
+| Edge:      | https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/ |
+| Firfeox:   | https://github.com/mozilla/geckodriver/releases                       |
+| Safari:    | https://webkit.org/blog/6900/webdriver-support-in-safari-10/          |
