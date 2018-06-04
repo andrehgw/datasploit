@@ -141,7 +141,7 @@ def main(email):
     
     return accountstats
     
-    return []
+    
 
 
 def output(data, email=""):
