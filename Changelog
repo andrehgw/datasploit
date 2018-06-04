@@ -7,3 +7,6 @@
 - added selenium and scrapy to requirements.txt
 - added param "webdriver_headless" to config
 - module email_lieferando
+
+2018-06-04:
+- module email_pizza_de

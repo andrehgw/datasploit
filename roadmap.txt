@@ -24,7 +24,7 @@ https://www.bildkontakte.de/
 https://www.kwick.de/auth/credentials/
 https://verliebt-im-norden.de/account/lostpass/
 http://www.mv-spion.de/einloggen
-https://pizza.de/
+
 
 
 nickname:
