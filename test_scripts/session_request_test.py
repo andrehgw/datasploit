@@ -25,9 +25,18 @@ def main():
     s.headers.update({'Authentication':'LH api-key=BqFXeTedMu1LQazCYZznkzyL5CFffcWIDW7GEpmCFVAPLi1dA4cdt76BnXkyEuqWAbCf8ZWtADOzaz5851LQj1dlppQVZSxPPAe0cA0g7Tn2GoXWTdfStKk5yrKrrB0J'})
     
     
-    payload = {'email':'maik.kunze1@freenet.de','op':'reset'}
+    payload = {'email':'maik.kunze11@freenet.de','op':'reset'}
     
     r = s.put('https://pizza.de/dowant-api/authorization/', data=json.dumps(payload))
+    
+    # status code HTTP 200 and empty  
+    if int(r.status_code) == 200 and len(json.loads(r.content))==0:
+        print "user exists"
+    else:
+        print "user not exists"
+    
+    
+    r.status_code
     
     pass
     
