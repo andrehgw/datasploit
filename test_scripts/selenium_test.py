@@ -103,7 +103,7 @@ def main():
     testpassword = "1stVerySecurePassword!"
     
     options = webdriver.FirefoxOptions()
-    options.set_headless(False)
+    options.set_headless(True)
     
     driver = webdriver.Firefox(options=options)
     
@@ -166,6 +166,7 @@ def main():
             notification = driver.find_element_by_xpath("//div[@id='notification']")
             signupform = driver.find_element_by_xpath("//form[@id='iaccountsignupform']")
             print "Lieferando %s exists" % testuser
+            driver.get_screenshot_as_file('/tmp/test.png')
         except NoSuchElementException, e:
             print "Lieferando no account %s " % testuser
         
