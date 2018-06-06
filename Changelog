@@ -1,12 +1,17 @@
 2018-06-01:
 
-- module username_facebook
-- module email_yahoo
+- new module username_facebook
+- new module email_yahoo
 - moved class "style" into base.by
 - added docs/README_selenium.md
 - added selenium and scrapy to requirements.txt
 - added param "webdriver_headless" to config
-- module email_lieferando
+- new module email_lieferando
 
 2018-06-04:
-- module email_pizza_de
+- new module email_pizza_de
+
+2018-06-06:
+- new scan area username_or_email
+  --> on some sites we can search for accounts with usernames or email addresses
+- new module username_or_email_tonline
