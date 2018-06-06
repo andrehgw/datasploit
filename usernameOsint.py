@@ -7,6 +7,7 @@ import optparse
 
 def run(username, output = None):
     osint_runner.run("username", "username", username, output)
+    osint_runner.run("username_or_email", "username_or_email", username, output)
 
 
 if __name__ == "__main__":
