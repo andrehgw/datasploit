@@ -1,0 +1,9 @@
+import sys
+import os
+
+dir_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+sys.path.insert(0, dir_path)
+
+class style:
+    BOLD = '\033[1m'
+    END = '\033[0m'
